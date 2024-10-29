@@ -1,6 +1,9 @@
 # UselessFactChecker
 UselessFactChecker
 
+The project is built on Quarkus and Java. 
+Please read the documentation here : https://quarkus.io/guides/
+
 # To run the project please clone the repo and use the following steps
 
 ## Bash

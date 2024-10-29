@@ -4,7 +4,7 @@ package com.example;
 public class CacheFactResponse {
 
     private String fact;
-    private String originalURL;
+    private String original_URL;
 
     public String getFact() {
         return fact;
@@ -15,11 +15,11 @@ public class CacheFactResponse {
     }
 
     public String getOriginalURL() {
-        return originalURL;
+        return original_URL;
     }
 
     public void setOriginalURL(String originalURL) {
-        this.originalURL = originalURL;
+        this.original_URL = originalURL;
     }
 
 }

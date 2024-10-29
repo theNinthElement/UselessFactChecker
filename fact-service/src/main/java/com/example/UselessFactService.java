@@ -5,7 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import io.quarkus.logging.Log;
 import jakarta.ws.rs.client.Client;
@@ -39,7 +43,7 @@ public class UselessFactService {
         }
     }
 
-    
+    // Method to pull a particular chached facts 
     public CachedFact getCachedFact(String shortenedUrl, int increase) {
         
         if(cache.containsKey(shortenedUrl) && increase == 1) 
@@ -50,15 +54,17 @@ public class UselessFactService {
         return cache.get(shortenedUrl);
     }
 
+    // Increament the access count of the counter 
     public void incrementAccessCount(String shortenedUrl) {
         CachedFact fact = cache.get(shortenedUrl);
         if (fact != null) {
             Log.info("Increasing the acceess Count before : " + fact.getAccessCount());
             fact.setAccessCount(fact.getAccessCount() + 1);
-            Log.info("Increasing the acceess Count before : " + fact.getAccessCount());
+            Log.info("Increasing the acceess Count after : " + fact.getAccessCount());
         }
     }
 
+    // Method to get all the cached Facts 
     public List<CacheFactResponse> getAllCachedFacts() {
         
         List<CacheFactResponse> list = new ArrayList<>();
@@ -82,8 +88,24 @@ public class UselessFactService {
         }        
     }
 
-    public Map<String, Integer> getAccessStatistics() {
-        return cache.entrySet().stream()
-            .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().getAccessCount()));
+    // Method to return the access Stats 
+    public String getAccessStatistics() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ArrayNode arrayNode = objectMapper.createArrayNode();
+        
+
+        cache.forEach((key, value) -> {
+            ObjectNode entryNode = objectMapper.createObjectNode();
+            entryNode.put("shortened_url", key);
+            entryNode.put("access_count", value.getAccessCount());
+            arrayNode.add(entryNode);
+        });
+        
+        try {
+            return objectMapper.writeValueAsString(arrayNode);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return "{}";
+        }
     }
 }

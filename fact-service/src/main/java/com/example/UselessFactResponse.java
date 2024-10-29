@@ -1,5 +1,6 @@
 package com.example;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -26,7 +27,7 @@ public class UselessFactResponse {
             String originalURL = jsonNode.get("permalink").asText();
             this.shortenedUrl = urlshortner.shortenUrl(originalURL);
 
-        } catch (Exception e) {
+        } catch (JsonProcessingException e) {
             Log.info("Failed to fetch the from the JSON reader" + e.getMessage());
         }
 
@@ -49,3 +50,5 @@ public class UselessFactResponse {
         this.shortenedUrl = shortenedUrl;
     }
 }
+
+

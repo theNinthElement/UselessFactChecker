@@ -2,7 +2,6 @@ package com.example;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Map;
 
 import org.jboss.logging.Logger;
 
@@ -21,9 +20,6 @@ public class UselessFactsResource {
 
     // @Inject
     UselessFactService uselessFactsService = new UselessFactService();
-
-    // Log.info("The);
-
     @POST
     @Path("/facts")
     @Produces(MediaType.APPLICATION_JSON)
@@ -64,8 +60,8 @@ public class UselessFactsResource {
         CachedFact fact = uselessFactsService.getCachedFact(shortenedUrl, 1);
         if (fact != null) {
             // Redirect logic
-            return Response.temporaryRedirect(URI.create(urlShortner.getOriginalUrl(shortenedUrl))).build();
-            // seeOther(URI.create(urlShortner.getOriginalUrl(shortenedUrl))).build();
+            return Response.temporaryRedirect(
+                URI.create(urlShortner.getOriginalUrl(shortenedUrl))).build();
         } else {
             return Response.status(Response.Status.BAD_REQUEST)
                            .entity("False Short URL provided")
@@ -76,7 +72,7 @@ public class UselessFactsResource {
     @GET
     @Path("/admin/statistics")
     @Produces(MediaType.APPLICATION_JSON)
-    public Map<String, Integer> getAccessStatistics() {
+    public String getAccessStatistics() {
         LOG.info(" Here we are getAccessStatistics");
         return uselessFactsService.getAccessStatistics();
     }    

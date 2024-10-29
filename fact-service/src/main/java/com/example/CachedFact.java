@@ -3,14 +3,14 @@ package com.example;
 public class CachedFact {
 
     private String fact;
-    private String shortendURL;
+    private String shortend_URL;
     private int accessCount;
     
 
     public CachedFact(String fact, String shortendURL, int accessCount) {
 
         this.fact = fact;
-        this.shortendURL = shortendURL;
+        this.shortend_URL = shortendURL;
         this.accessCount = accessCount;
 
     }
@@ -26,11 +26,11 @@ public class CachedFact {
     }
 
     public String getShortendURL() {
-        return shortendURL;
+        return shortend_URL;
     }
 
     public void setShortendURL(String shortendURL) {
-        this.shortendURL = shortendURL;
+        this.shortend_URL = shortendURL;
     }
 
     public int getAccessCount() {

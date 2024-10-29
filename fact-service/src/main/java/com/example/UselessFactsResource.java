@@ -1,5 +1,6 @@
 package com.example;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 @Path("")
 public class UselessFactsResource {
@@ -36,7 +38,13 @@ public class UselessFactsResource {
     public CachedFact getCachedFact(@PathParam("shortenedUrl") String shortenedUrlExtension) {
         LOG.info(" Here we are getCachedFact");
         String shortenedUrl = "short.ly/"+shortenedUrlExtension;
-        return uselessFactsService.getCachedFact(shortenedUrl);
+
+        CachedFact fact = uselessFactsService.getCachedFact(shortenedUrl, 0);
+        if (fact!=null) {
+            return uselessFactsService.getCachedFact(shortenedUrl, 1);
+        } else {
+            return null;
+        }        
     }
 
     @GET
@@ -48,14 +56,20 @@ public class UselessFactsResource {
 
     @GET
     @Path("/facts/{shortenedUrl}/redirect")
-    public void redirectToOriginal(@PathParam("shortenedUrl") String shortenedUrlExtension) {
+    public Response redirectToOriginal(@PathParam("shortenedUrl") String shortenedUrlExtension) {
         LOG.info(" Here we are redirectToOriginal");
         String shortenedUrl = "short.ly/"+shortenedUrlExtension;
         uselessFactsService.incrementAccessCount(shortenedUrl);
-        CachedFact fact = uselessFactsService.getCachedFact(shortenedUrl);
+        URLShortner urlShortner = new URLShortner();
+        CachedFact fact = uselessFactsService.getCachedFact(shortenedUrl, 1);
         if (fact != null) {
             // Redirect logic
-            // return Response.seeOther(URI.create(fact.getShortendURL())).build();
+            return Response.temporaryRedirect(URI.create(urlShortner.getOriginalUrl(shortenedUrl))).build();
+            // seeOther(URI.create(urlShortner.getOriginalUrl(shortenedUrl))).build();
+        } else {
+            return Response.status(Response.Status.BAD_REQUEST)
+                           .entity("False Short URL provided")
+                           .build();
         }
     }
 

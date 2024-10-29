@@ -40,9 +40,9 @@ public class UselessFactService {
     }
 
     
-    public CachedFact getCachedFact(String shortenedUrl) {
+    public CachedFact getCachedFact(String shortenedUrl, int increase) {
         
-        if(cache.containsKey(shortenedUrl)) 
+        if(cache.containsKey(shortenedUrl) && increase == 1) 
         {
             incrementAccessCount(shortenedUrl);    
         }

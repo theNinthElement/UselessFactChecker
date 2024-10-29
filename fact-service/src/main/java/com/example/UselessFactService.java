@@ -43,7 +43,9 @@ public class UselessFactService {
         }
     }
 
-    // Method to pull a particular chached facts 
+    /*
+     * Method to pull a particular chached facts 
+     */
     public CachedFact getCachedFact(String shortenedUrl, int increase) {
         
         if(cache.containsKey(shortenedUrl) && increase == 1) 
@@ -54,7 +56,9 @@ public class UselessFactService {
         return cache.get(shortenedUrl);
     }
 
-    // Increament the access count of the counter 
+    /*
+     * Increament the access count of the counter 
+     */
     public void incrementAccessCount(String shortenedUrl) {
         CachedFact fact = cache.get(shortenedUrl);
         if (fact != null) {
@@ -64,7 +68,9 @@ public class UselessFactService {
         }
     }
 
-    // Method to get all the cached Facts 
+    /*
+     * Method to get all the cached Facts 
+     */
     public List<CacheFactResponse> getAllCachedFacts() {
         
         List<CacheFactResponse> list = new ArrayList<>();
@@ -88,7 +94,9 @@ public class UselessFactService {
         }        
     }
 
-    // Method to return the access Stats 
+    /*
+    *Method to return the access Stats  
+    */ 
     public String getAccessStatistics() {
         ObjectMapper objectMapper = new ObjectMapper();
         ArrayNode arrayNode = objectMapper.createArrayNode();

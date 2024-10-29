@@ -1,5 +1,7 @@
 package com.example;
-// CachedFact.java
+/*
+ * Class describes a storage data structure for facts and its short URL and the accesscount 
+ */
 public class CachedFact {
 
     private String fact;

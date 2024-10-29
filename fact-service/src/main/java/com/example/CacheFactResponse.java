@@ -1,6 +1,8 @@
 package com.example;
 
-
+/*
+ * Class describes a response to Fact API call
+ */
 public class CacheFactResponse {
 
     private String fact;

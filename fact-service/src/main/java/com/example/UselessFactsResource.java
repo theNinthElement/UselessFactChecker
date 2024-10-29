@@ -20,6 +20,10 @@ public class UselessFactsResource {
 
     // @Inject
     UselessFactService uselessFactsService = new UselessFactService();
+
+    /*
+     * The main Post method that takes the '/fact' and calls the API 
+     */
     @POST
     @Path("/facts")
     @Produces(MediaType.APPLICATION_JSON)
@@ -28,6 +32,10 @@ public class UselessFactsResource {
         return uselessFactsService.fetchRandomFact();
     }
 
+    /*
+     * GetCachedFact method tries to find the target shortned URL code when only the URL is send 
+     * for example : https://localhost:8080/facts/63463783
+     */
     @GET
     @Path("/facts/{shortenedUrl}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -43,6 +51,9 @@ public class UselessFactsResource {
         }        
     }
 
+    /*
+     * Send backs all the cached facts 
+     */
     @GET
     @Path("/facts")
     public List<CacheFactResponse> getAllCachedFacts() {
@@ -50,6 +61,11 @@ public class UselessFactsResource {
         return uselessFactsService.getAllCachedFacts();
     }
 
+
+    /*
+     * redirect to Original redirects the shornented URL to the Original URL
+     * for example : https://localhost:8080/facts/63463783/redirect
+     */
     @GET
     @Path("/facts/{shortenedUrl}/redirect")
     public Response redirectToOriginal(@PathParam("shortenedUrl") String shortenedUrlExtension) {
@@ -69,6 +85,9 @@ public class UselessFactsResource {
         }
     }
 
+    /*
+     * This Method sends a series of statistics back based on the accesscount and shortned URL
+     */
     @GET
     @Path("/admin/statistics")
     @Produces(MediaType.APPLICATION_JSON)

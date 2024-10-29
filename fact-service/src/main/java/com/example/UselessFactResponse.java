@@ -6,7 +6,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.quarkus.logging.Log;
 
-
+/*
+ * Class describes the basic reading capability of the Input data from the API
+ */
 public class UselessFactResponse {
 
     

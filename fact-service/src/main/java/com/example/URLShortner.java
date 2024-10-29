@@ -5,6 +5,9 @@ import java.util.Map;
 
 import io.quarkus.logging.Log;
 
+/*
+ * Class describes a URl shorner model which uses local Map
+ */
 public class URLShortner {
     private final static Map<String, String> urlMap = new HashMap<>();
     private final String baseUrl = "short.ly/";

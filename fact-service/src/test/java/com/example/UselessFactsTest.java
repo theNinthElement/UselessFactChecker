@@ -3,10 +3,8 @@ package com.example;
 import static org.hamcrest.Matchers.notNullValue;
 import org.junit.jupiter.api.Test;
 
-import io.quarkus.logging.Log;
 import io.quarkus.test.junit.QuarkusTest;
 import static io.restassured.RestAssured.given;
-import io.restassured.response.Response;
 
 @QuarkusTest
 class UselessFactsTest {
@@ -60,14 +58,14 @@ class UselessFactsTest {
         .then()
           .statusCode(200);
 
-        Response r = given()
+       given()
           .when()
             .get("/admin/statistics")
           .then()
-            .statusCode(200).extract().response();
-              // .body("shortenedUrl", notNullValue());
+            .statusCode(200)
+              .body("shortenedUrl", notNullValue());
 
-        Log.info("Here is the response " + r.jsonPath());
+        // Log.info("Here is the response " + r.jsonPath());
 
     }
 
